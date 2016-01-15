@@ -48,10 +48,10 @@ def get_adapters():
     ips = collections.OrderedDict()
     
     def add_ip(adapter_name, ip):
-        if not adapter_name in ips:
+        if adapter_name not in ips:
             ips[adapter_name] = shared.Adapter(adapter_name, adapter_name, [])
         ips[adapter_name].ips.append(ip)
-            
+
 
     while addr:
         name = addr[0].ifa_name
@@ -60,9 +60,10 @@ def get_adapters():
             netmask = shared.sockaddr_to_ip(addr[0].ifa_netmask)
             if isinstance(netmask, tuple):
                 netmask = netmask[0]
-                prefixlen = shared.ipv6_prefixlength(ipaddress.IPv6Address(unicode(netmask)))
+                prefixlen = shared.ipv6_prefixlength(ipaddress.IPv6Address(netmask))
             else:
-                prefixlen = ipaddress.IPv4Network(unicode('0.0.0.0/' + netmask)).prefixlen
+                netmask = netmask or '16'  # default to 16 if None
+                prefixlen = ipaddress.IPv4Network('0.0.0.0/' + netmask).prefixlen
             ip = shared.IP(ip, prefixlen, name)
             add_ip(name, ip)
         addr = addr[0].ifa_next

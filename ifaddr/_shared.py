@@ -100,16 +100,13 @@ class IP(object):
         if it is an IPv4 address.
         """
         return isinstance(self.ip, tuple)
-    
-    
+
     def __repr__(self):
         return "IP(ip={ip}, network_prefix={network_prefix}, nice_name={nice_name})".format(
             ip = repr(self.ip),
             network_prefix = repr(self.network_prefix),
             nice_name = repr(self.nice_name)                                                                          
         )
-        
-        
 
 
 if platform.system() == "Darwin":
@@ -171,10 +168,10 @@ def sockaddr_to_ip(sockaddr_ptr):
         ippacked = bytes(bytearray(ipv6[0].sin6_addr))
         ip = str(ipaddress.ip_address(ippacked))
         scope_id = ipv6[0].sin6_scope_id
-        return(ip, flowinfo, scope_id)
+        return ip, flowinfo, scope_id
     else:
         return None
 
 
 def ipv6_prefixlength(address):
-    return sum(bin(ord(b)).count("1") for b in address.packed)
+    return bin(int(str(address).replace(':', ''), base=16)).count('1')
