@@ -25,7 +25,7 @@ import ipaddress
 import collections
 
 import ifaddr._shared as shared
-#from ifaddr._shared import sockaddr, Interface, sockaddr_to_ip, ipv6_prefixlength
+
 
 class ifaddrs(ctypes.Structure):
     pass
@@ -36,6 +36,7 @@ ifaddrs._fields_ = [('ifa_next', ctypes.POINTER(ifaddrs)),
                     ('ifa_netmask', ctypes.POINTER(shared.sockaddr))]
 
 libc = ctypes.CDLL(ctypes.util.find_library("c"), use_errno=True)
+
 
 def get_adapters():
     
@@ -51,7 +52,6 @@ def get_adapters():
         if adapter_name not in ips:
             ips[adapter_name] = shared.Adapter(adapter_name, adapter_name, [])
         ips[adapter_name].ips.append(ip)
-
 
     while addr:
         name = addr[0].ifa_name

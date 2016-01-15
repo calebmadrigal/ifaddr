@@ -54,9 +54,9 @@ class Adapter(object):
         
     def __repr__(self):
         return "Adapter(name={name}, nice_name={nice_name}, ips={ips})".format(
-           name = repr(self.name),
-           nice_name = repr(self.nice_name),
-           ips = repr(self.ips)
+            name=repr(self.name),
+            nice_name=repr(self.nice_name),
+            ips=repr(self.ips)
         )
 
 
@@ -103,9 +103,9 @@ class IP(object):
 
     def __repr__(self):
         return "IP(ip={ip}, network_prefix={network_prefix}, nice_name={nice_name})".format(
-            ip = repr(self.ip),
-            network_prefix = repr(self.network_prefix),
-            nice_name = repr(self.nice_name)                                                                          
+            ip=repr(self.ip),
+            network_prefix=repr(self.network_prefix),
+            nice_name=repr(self.nice_name)
         )
 
 
@@ -117,44 +117,44 @@ if platform.system() == "Darwin":
     # both structures equally.
     
     class sockaddr(ctypes.Structure):
-        _fields_= [('sa_len', ctypes.c_uint8),
-                   ('sa_familiy', ctypes.c_uint8),
-                   ('sa_data', ctypes.c_byte * 14)]
+        _fields_ = [('sa_len', ctypes.c_uint8),
+                    ('sa_familiy', ctypes.c_uint8),
+                    ('sa_data', ctypes.c_byte * 14)]
     
     class sockaddr_in(ctypes.Structure):
-        _fields_= [('sa_len', ctypes.c_uint8),
-                   ('sa_familiy', ctypes.c_uint8),
-                   ('sin_port', ctypes.c_ushort),
-                   ('sin_addr', ctypes.c_byte * 4),
-                   ('sin_zero', ctypes.c_byte * 8)]
+        _fields_ = [('sa_len', ctypes.c_uint8),
+                    ('sa_familiy', ctypes.c_uint8),
+                    ('sin_port', ctypes.c_ushort),
+                    ('sin_addr', ctypes.c_byte * 4),
+                    ('sin_zero', ctypes.c_byte * 8)]
         
     class sockaddr_in6(ctypes.Structure):
-        _fields_= [('sa_len', ctypes.c_uint8),
-                   ('sa_familiy', ctypes.c_uint8),
-                   ('sin6_port', ctypes.c_ushort),
-                   ('sin6_flowinfo', ctypes.c_ulong),
-                   ('sin6_addr', ctypes.c_byte * 16),
-                   ('sin6_scope_id', ctypes.c_ulong)]
+        _fields_ = [('sa_len', ctypes.c_uint8),
+                    ('sa_familiy', ctypes.c_uint8),
+                    ('sin6_port', ctypes.c_ushort),
+                    ('sin6_flowinfo', ctypes.c_ulong),
+                    ('sin6_addr', ctypes.c_byte * 16),
+                    ('sin6_scope_id', ctypes.c_ulong)]
 
 else:
 
     class sockaddr(ctypes.Structure):
-        _fields_= [('sa_familiy', ctypes.c_ushort),
-                   ('sa_data', ctypes.c_byte * 14)]
+        _fields_ = [('sa_familiy', ctypes.c_ushort),
+                    ('sa_data', ctypes.c_byte * 14)]
     
     class sockaddr_in(ctypes.Structure):
-        _fields_= [('sin_familiy', ctypes.c_ushort),
-                   ('sin_port', ctypes.c_ushort),
-                   ('sin_addr', ctypes.c_byte * 4),
-                   ('sin_zero', ctypes.c_byte * 8)]
+        _fields_ = [('sin_familiy', ctypes.c_ushort),
+                    ('sin_port', ctypes.c_ushort),
+                    ('sin_addr', ctypes.c_byte * 4),
+                    ('sin_zero', ctypes.c_byte * 8)]
         
     class sockaddr_in6(ctypes.Structure):
-        _fields_= [('sin6_familiy', ctypes.c_ushort),
-                   ('sin6_port', ctypes.c_ushort),
-                   ('sin6_flowinfo', ctypes.c_ulong),
-                   ('sin6_addr', ctypes.c_byte * 16),
-                   ('sin6_scope_id', ctypes.c_ulong)]
-    
+        _fields_ = [('sin6_familiy', ctypes.c_ushort),
+                    ('sin6_port', ctypes.c_ushort),
+                    ('sin6_flowinfo', ctypes.c_ulong),
+                    ('sin6_addr', ctypes.c_byte * 16),
+                    ('sin6_scope_id', ctypes.c_ulong)]
+
     
 def sockaddr_to_ip(sockaddr_ptr):
     if sockaddr_ptr[0].sa_familiy == socket.AF_INET:
@@ -174,7 +174,6 @@ def sockaddr_to_ip(sockaddr_ptr):
 
 
 def ipv6_prefixlength(address):
-    print('ADDR SUBNET: {}'.format(str(address)))
     try:
         prefix_len = bin(int(str(address).replace(':', ''), base=16)).count('1')
     except ValueError:
