@@ -174,4 +174,10 @@ def sockaddr_to_ip(sockaddr_ptr):
 
 
 def ipv6_prefixlength(address):
-    return bin(int(str(address).replace(':', ''), base=16)).count('1')
+    print('ADDR SUBNET: {}'.format(str(address)))
+    try:
+        prefix_len = bin(int(str(address).replace(':', ''), base=16)).count('1')
+    except ValueError:
+        prefix_len = 128
+    return prefix_len
+
