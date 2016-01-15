@@ -32,11 +32,11 @@ MAX_ADAPTER_ADDRESS_LENGTH = 8
 AF_UNSPEC = 0
 
 
-    
 class SOCKET_ADDRESS(ctypes.Structure):
     _fields_ = [('lpSockaddr', ctypes.POINTER(shared.sockaddr)),
-               ('iSockaddrLength', wintypes.INT)]
-    
+                ('iSockaddrLength', wintypes.INT)]
+
+
 class IP_ADAPTER_UNICAST_ADDRESS(ctypes.Structure):
     pass
 IP_ADAPTER_UNICAST_ADDRESS._fields_ = \
@@ -112,8 +112,7 @@ def get_adapters():
         if not address_info.Next:
             break
         address_info = address_info.Next[0]
-    
-    
+
     # Iterate through unicast addresses
     result = []
     for adapter_info in address_infos:
